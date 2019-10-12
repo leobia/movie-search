@@ -1,6 +1,6 @@
 <template>
   <div class="columns is-multiline">
-    <div class="column is-one-quarter" v-for="(movie, index) in movies" :key="index">
+    <div class="column is-one-fifth" v-for="(movie, index) in movies" :key="index">
       <div class="card">
         <div class="card-image">
           <figure class="image is-9by16">
@@ -11,7 +11,6 @@
           <div class="content">
             <p>{{ movie.Title }}</p>
             <p>{{ movie.Type }}</p>
-            <br />
             <time datetime="2016-1-1">{{ movie.Year }}</time>
           </div>
         </div>
@@ -32,4 +31,10 @@ export default {
 </script>
 
 <style>
+
+.card {
+  border-radius: 6px;
+  font-size: 0.7rem;
+  text-align: left;
+}
 </style>

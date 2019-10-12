@@ -1,10 +1,12 @@
 <template>
-  <div class="field has-addons has-addons-centered">
-    <div class="control">
-      <input class="input" type="text" placeholder="Find a movie" v-model="searchValue" />
-    </div>
-    <div class="control">
-      <a class="button" v-on:click="search">Search</a>
+  <div class="box">
+    <div class="field has-addons has-addons-centered" @keyup.enter="search">
+      <div class="control is-expanded">
+        <input class="input" type="text" placeholder="Find a movie" v-model="searchValue" />
+      </div>
+      <div class="control">
+        <a class="button" v-on:click="search">Search</a>
+      </div>
     </div>
   </div>
 </template>
@@ -24,9 +26,13 @@ export default {
   methods: {
     async search() {
       if (this.searchValue) {
-        const url = this.searchOmdbUrl + this.searchValue
-        const response = await this.$axios.$get(url)
-        this.$emit('search-result', response.Search)
+        let url = this.searchOmdbUrl + this.searchValue
+        const page1 = await this.$axios.$get(url)
+        url = url + '&page=2'
+        const page2 = await this.$axios.$get(url)
+        const response = page1.Search.concat(page2.Search)
+
+        this.$emit('search-result', response)
       } else {
         bulmaToast.toast({
           message: 'Type a valid keyword!',
